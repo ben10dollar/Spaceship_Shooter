@@ -14,8 +14,8 @@ CENTRAL_BARRIER = pygame.Rect(WIDTH // 2 - BARR_WIDTH // 2, 0, BARR_WIDTH, HEIGH
 
 # Colors
 WHITE = (255, 255, 255)
-ORANGE = ()
-GREEN = ()
+ORANGE = (255, 165, 0)
+GREEN = (0, 255, 0)
 BLACK = (0, 0, 0)
 
 # Text
@@ -58,7 +58,7 @@ def draw_window(p1_ship, p2_ship, p1_lives, p2_lives):
     p2_health_text = HEALTH_FONT.render("Lives: " + str(p2_lives), 1, WHITE)
 
     WINDOW.blit(p1_health_text, (10, 10))
-    WINDOW.blit(p2_health_text, (WIDTH-10, 10))
+    WINDOW.blit(p2_health_text, (WIDTH-10-p2_health_text.get_width(), 10))
 
     WINDOW.blit(SHIP_1_IMG, (p1_ship.x, p1_ship.y))
     WINDOW.blit(SHIP_2_IMG, (p2_ship.x, p2_ship.y))
@@ -67,27 +67,25 @@ def draw_window(p1_ship, p2_ship, p1_lives, p2_lives):
 
 
 def move_spaceships(p1_ship, p2_ship, keys_pressed: list):
-    for key_pressed in keys_pressed:
-        match key_pressed:
-            # Move spaceship 1
-            case pygame.K_w:
-                p1_ship.y += VEL
-            case pygame.K_s:
-                p1_ship.y -= VEL
-            case pygame.K_d:
-                p1_ship.x += VEL
-            case pygame.K_a:
-                p1_ship.x -= VEL
+    # Move spaceship 1
+    if keys_pressed[pygame.K_s] and p1_ship.y + p1_ship.width < HEIGHT:
+        p1_ship.y += VEL
+    if keys_pressed[pygame.K_w] and p1_ship.y > 0:
+        p1_ship.y -= VEL
+    if keys_pressed[pygame.K_d] and p1_ship.x + p1_ship.height < WIDTH:
+        p1_ship.x += VEL
+    if keys_pressed[pygame.K_a] and p1_ship.x > 0:
+        p1_ship.x -= VEL
 
-            # Move spaceship 2
-            case pygame.K_UP:
-                p2_ship.y += VEL
-            case pygame.K_DOWN:
-                p2_ship.y -= VEL
-            case pygame.K_RIGHT:
-                p2_ship.x += VEL
-            case pygame.K_LEFT:
-                p2_ship.x -= VEL
+    # Move spaceship 2
+    if keys_pressed[pygame.K_DOWN] and p2_ship.y + p2_ship.width < HEIGHT:
+        p2_ship.y += VEL
+    if keys_pressed[pygame.K_UP] and p2_ship.y > 0:
+        p2_ship.y -= VEL
+    if keys_pressed[pygame.K_RIGHT] and p2_ship.x + p2_ship.height < WIDTH:
+        p2_ship.x += VEL
+    if keys_pressed[pygame.K_LEFT] and p2_ship.x > 0:
+        p2_ship.x -= VEL
 
 
 # main Definition
