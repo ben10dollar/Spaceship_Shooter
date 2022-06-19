@@ -2,7 +2,6 @@ import pygame
 from literals import *
 from gameplay import *
 
-
 pygame.mixer.init()
 pygame.display.init()
 
@@ -75,10 +74,25 @@ def main():
             if check_collision(bullet, p2_ship):
                 p1_bullets.remove(bullet)
                 p2_lives -= 1
-            elif check_collision(bullet, WIDTH):
+            elif check_collision(bullet, [WIDTH, WIDTH * 2]):
                 p1_bullets.remove(bullet)
             else:
                 bullet.x += BULLET_VEL
+        for bullet in p2_bullets:
+            if check_collision(bullet, p1_ship):
+                p2_bullets.remove(bullet)
+                p1_lives -= 1
+            elif check_collision(bullet, [-WIDTH, 0]):
+                p2_bullets.remove(bullet)
+            else:
+                bullet.x -= BULLET_VEL
+
+        if p1_lives == 0:
+            draw_winner("Player 1 Wins!")
+            break
+        elif p2_lives == 0:
+            draw_winner("Player 2 Wins!")
+            break
 
         draw_window(p1_ship, p2_ship, p1_bullets, p2_bullets, p1_lives, p2_lives)
 

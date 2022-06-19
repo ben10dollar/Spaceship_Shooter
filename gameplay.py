@@ -4,21 +4,21 @@ from literals import *
 
 def move_spaceships(p1_ship, p2_ship, keys_pressed: list):
     # Move spaceship 1
-    if keys_pressed[pygame.K_s] and p1_ship.y + p1_ship.width < HEIGHT:
+    if keys_pressed[pygame.K_s] and p1_ship.y + p1_ship.height < HEIGHT:
         p1_ship.y += VEL
     if keys_pressed[pygame.K_w] and p1_ship.y > 0:
         p1_ship.y -= VEL
-    if keys_pressed[pygame.K_d] and p1_ship.x + p1_ship.height < WIDTH:
+    if keys_pressed[pygame.K_d] and p1_ship.x + p1_ship.width < WIDTH:
         p1_ship.x += VEL
     if keys_pressed[pygame.K_a] and p1_ship.x > 0:
         p1_ship.x -= VEL
 
     # Move spaceship 2
-    if keys_pressed[pygame.K_DOWN] and p2_ship.y + p2_ship.width < HEIGHT:
+    if keys_pressed[pygame.K_DOWN] and p2_ship.y + p2_ship.height < HEIGHT:
         p2_ship.y += VEL
     if keys_pressed[pygame.K_UP] and p2_ship.y > 0:
         p2_ship.y -= VEL
-    if keys_pressed[pygame.K_RIGHT] and p2_ship.x + p2_ship.height < WIDTH:
+    if keys_pressed[pygame.K_RIGHT] and p2_ship.x + p2_ship.width < WIDTH:
         p2_ship.x += VEL
     if keys_pressed[pygame.K_LEFT] and p2_ship.x > 0:
         p2_ship.x -= VEL
@@ -47,33 +47,22 @@ def p2_create_bullets(p2_bullets: list[pygame.Rect], p2_ship, keys_pressed: list
 
 def check_collision(collider: pygame.Rect, boundary):
     if type(boundary) == pygame.Rect:
-        if boundary.x <= collider.x <= boundary.x + boundary.width:
-            if boundary.y <= collider.y <= boundary.y + boundary.height:
+        # If x-coordinates match up
+        if boundary.x <= collider.x <= boundary.x + boundary.width \
+                or boundary.x <= collider.x + collider.width <= boundary.x + boundary.width:
+            # If y-coordinates match up
+            if boundary.y <= collider.y <= boundary.y + boundary.height \
+                    or boundary.y <= collider.y + collider.height <= boundary.y + boundary.height:
                 return True
-            elif boundary.y <= collider.y + collider.height <= boundary.y + boundary.height:
-                return True
-    elif type(boundary) == int:
-        if collider.x == boundary:
-            return True
-        elif collider.x + collider.width == boundary:
+    elif type(boundary) == list:
+        if boundary[0] <= collider.x <= boundary[1] \
+                or boundary[0] <= collider.x + collider.width <= boundary[1]:
             return True
     return False
 
 
-# def move_bullets(p1_bullets: list[pygame.Rect], p2_lives: int, p2_bullets: list[pygame.Rect]):
-#     for bullet in p1_bullets:
-#         if bullet.x > WIDTH - BULLET_WIDTH:
-#             p1_bullets.remove(bullet)
-#         elif check_collision(bullet, p2_ship):
-#             p1_bullets.remove(bullet)
-#             p2_lives.
-#         else:
-#             bullet.x += BULLET_VEL
-#     for bullet in p2_bullets:
-#         if bullet.x > 0:
-#             bullet.x -= BULLET_VEL
-#         else:
-#             p2_bullets.remove(bullet)
-#
-# def move_bullet(bullet: pygame.Rect):
-#     bullet.x =
+def draw_winner(text):
+    draw_text = WINNER_FONT.render(text, 1, WHITE)
+    WINDOW.blit(draw_text, (WIDTH/2 - draw_text.get_width()/2, HEIGHT/2 - draw_text.get_height()/2))
+    pygame.display.update()
+    pygame.time.delay(5000)

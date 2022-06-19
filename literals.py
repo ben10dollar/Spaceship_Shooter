@@ -34,7 +34,7 @@ BULLET_BORDER_RADIUS = 3
 # In milliseconds (ms)
 FIRE_INTERVAL = 500
 STARTING_LIVES = 5
-SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 133, 100
+SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 100, 133
 
 # User Events
 SHIP_1_HIT = pygame.USEREVENT + 1
@@ -45,10 +45,10 @@ ORANGE_SHIP_IMG = pygame.image.load(os.path.join('Assets', 'Orange_Spaceship.png
 GREEN_SHIP_IMG = pygame.image.load(os.path.join('Assets', 'Green_Spaceship.png'))
 SPACE = pygame.image.load(os.path.join('Assets', 'Space_Background.jpg'))
 # Assign game objects based on style
-SHIP_1_IMG = pygame.transform.rotate(
-    pygame.transform.scale(
-        GREEN_SHIP_IMG, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)), -90)
-SHIP_2_IMG = pygame.transform.rotate(
-    pygame.transform.scale(
-        ORANGE_SHIP_IMG, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)), 90)
+SHIP_1_IMG = pygame.transform.scale(
+    pygame.transform.rotate(
+        GREEN_SHIP_IMG, -90), (SPACESHIP_WIDTH, SPACESHIP_HEIGHT))
+SHIP_2_IMG = pygame.transform.scale(
+    pygame.transform.rotate(
+        ORANGE_SHIP_IMG, 90), (SPACESHIP_WIDTH, SPACESHIP_HEIGHT))
 BACKGROUND = pygame.transform.scale(SPACE, (WIDTH, HEIGHT))
