@@ -32,9 +32,11 @@ BULLET_HEIGHT = 10
 BULLET_WIDTH = 30
 BULLET_BORDER_RADIUS = 3
 # In milliseconds (ms)
-FIRE_INTERVAL = 500
+FIRE_INTERVAL = 250
 STARTING_LIVES = 5
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 100, 133
+TOKEN_WIDTH, TOKEN_HEIGHT = 100, 100
+POWER_UP_DURATION = 5000
 
 # User Events
 SHIP_1_HIT = pygame.USEREVENT + 1
@@ -52,3 +54,5 @@ SHIP_2_IMG = pygame.transform.scale(
     pygame.transform.rotate(
         ORANGE_SHIP_IMG, 90), (SPACESHIP_WIDTH, SPACESHIP_HEIGHT))
 BACKGROUND = pygame.transform.scale(SPACE, (WIDTH, HEIGHT))
+RAPID_FIRE_TOKEN = pygame.transform.scale(
+    pygame.image.load(os.path.join('Assets', 'Rapid_Fire_Token.png')), (TOKEN_WIDTH, TOKEN_HEIGHT))

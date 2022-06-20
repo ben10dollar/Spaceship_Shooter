@@ -8,7 +8,7 @@ def move_spaceships(p1_ship, p2_ship, keys_pressed: list):
         p1_ship.y += VEL
     if keys_pressed[pygame.K_w] and p1_ship.y > 0:
         p1_ship.y -= VEL
-    if keys_pressed[pygame.K_d] and p1_ship.x + p1_ship.width < WIDTH:
+    if keys_pressed[pygame.K_d] and p1_ship.x + p1_ship.width < WIDTH//2:
         p1_ship.x += VEL
     if keys_pressed[pygame.K_a] and p1_ship.x > 0:
         p1_ship.x -= VEL
@@ -20,14 +20,14 @@ def move_spaceships(p1_ship, p2_ship, keys_pressed: list):
         p2_ship.y -= VEL
     if keys_pressed[pygame.K_RIGHT] and p2_ship.x + p2_ship.width < WIDTH:
         p2_ship.x += VEL
-    if keys_pressed[pygame.K_LEFT] and p2_ship.x > 0:
+    if keys_pressed[pygame.K_LEFT] and p2_ship.x > WIDTH//2:
         p2_ship.x -= VEL
 
 
 # Returns time of firing if successful; if unsuccessful, returns 0
-def p1_create_bullets(p1_bullets: list[pygame.Rect], p1_ship, keys_pressed: list):
+def p1_create_bullets(p1_bullets: list[pygame.Rect], p1_ship, p1_max_bullets, keys_pressed: list):
     # If the max bullets aren't already reached, create a bullet at the middle of the aircraft
-    if keys_pressed[pygame.K_SPACE] and len(p1_bullets) < MAX_BULLETS:
+    if keys_pressed[pygame.K_SPACE] and len(p1_bullets) < p1_max_bullets:
         p1_bullets.append(
             pygame.Rect(
                 p1_ship.x + p1_ship.width, p1_ship.y + p1_ship.height // 2, BULLET_WIDTH, BULLET_HEIGHT))
@@ -36,13 +36,19 @@ def p1_create_bullets(p1_bullets: list[pygame.Rect], p1_ship, keys_pressed: list
 
 
 # Returns time of firing if successful; if unsuccessful, returns 0
-def p2_create_bullets(p2_bullets: list[pygame.Rect], p2_ship, keys_pressed: list):
-    if keys_pressed[pygame.K_RCTRL] and len(p2_bullets) < MAX_BULLETS:
+def p2_create_bullets(p2_bullets: list[pygame.Rect], p2_ship, p2_max_bullets, keys_pressed: list):
+    if keys_pressed[pygame.K_RCTRL] and len(p2_bullets) < p2_max_bullets:
         p2_bullets.append(
             pygame.Rect(
                 p2_ship.x, p2_ship.y + p2_ship.height // 2, BULLET_WIDTH, BULLET_HEIGHT))
         return pygame.time.get_ticks()
     return 0
+
+
+def create_token(token: list, height):
+    token.append(pygame.Rect(WIDTH//2 - TOKEN_WIDTH//2, height, TOKEN_WIDTH, TOKEN_HEIGHT))
+
+    return pygame.time.get_ticks()
 
 
 def check_collision(collider: pygame.Rect, boundary):
